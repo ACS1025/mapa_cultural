@@ -1,0 +1,219 @@
+/* Interatividade — filtros, lista de escolas, tabela de atividades.
+   Alinhado ao styles.css: usa as variáveis do :root (--green, --green-dark,
+   --teal, --ink, --muted, --line, --surface, --page, --shadow).
+   Carregar DEPOIS do styles.css. */
+
+/* ---------- status da carga ---------- */
+
+.data-badge.is-ok .status-dot,
+.map-disclaimer.is-ok .status-dot { background: var(--green); }
+
+.data-badge.is-error { border-color: #f0c4c4; color: #a33a3a; }
+.data-badge.is-error .status-dot,
+.map-disclaimer.is-error .status-dot { background: #d64545; }
+
+/* ---------- barra de filtros ---------- */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: -6px 0 18px;
+  padding: 10px 0;
+}
+
+.filter-bar input[type="search"],
+.filter-bar select {
+  font: inherit;
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 11px;
+  min-height: 38px;
+  max-width: 100%;
+}
+
+.filter-bar input[type="search"] {
+  flex: 1 1 220px;
+  min-width: 160px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.filter-bar select { flex: 0 1 180px; }
+
+.filter-bar input:focus-visible,
+.filter-bar select:focus-visible,
+.filter-bar .text-button:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 1px;
+}
+
+.filter-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* No desktop a barra acompanha a rolagem; no celular ela ocuparia tela demais */
+@media (min-width: 701px) {
+  .filter-bar {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: var(--page);
+  }
+}
+
+/* ---------- lista de escolas ---------- */
+
+.school-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.school-card {
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(17, 26, 53, .025);
+  cursor: pointer;
+  transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.school-card:hover,
+.school-card:focus-visible {
+  border-color: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.school-card:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.school-card h4 {
+  margin: 0 0 5px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.school-meta {
+  margin: 0 0 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #eff5e4;
+  color: var(--green-dark);
+}
+
+.chip-muted { background: #fff5dc; color: #88651c; }
+.chip-warn { background: #fdecea; color: #a3392b; }
+
+/* ---------- tabela de atividades ---------- */
+
+.table-wrap { overflow-x: auto; }
+
+.activity-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.activity-table th,
+.activity-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.activity-table th {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.activity-table tbody tr:last-child td { border-bottom: 0; }
+
+.activity-table th:not(:first-child),
+.activity-table td:not(:first-child) { text-align: center; }
+
+.link-button {
+  font: inherit;
+  font-weight: 800;
+  color: var(--green-dark);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--green);
+  text-underline-offset: 3px;
+}
+
+.link-button:hover,
+.link-button:focus-visible { color: var(--ink); }
+
+/* ---------- cards de projeto ---------- */
+
+.project-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.project-count {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---------- celular ---------- */
+
+/* O styles.css esconde TODOS os .data-badge no celular. Isso apagaria o status
+   da API e as contagens "X de Y registros". Aqui eles voltam, em versão compacta. */
+@media (max-width: 700px) {
+  .data-badge { display: inline-flex; }
+
+  .topbar .data-badge {
+    max-width: 130px;
+    white-space: normal;
+    line-height: 1.3;
+    font-size: 9px;
+    padding: 6px 9px;
+  }
+
+  .topbar-actions { flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+
+  .filter-bar select { flex: 1 1 45%; }
+  .filter-count { margin-left: 0; flex-basis: 100%; }
+
+  .activity-table th,
+  .activity-table td { padding: 10px; }
+}

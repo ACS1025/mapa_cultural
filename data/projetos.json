@@ -1,0 +1,32 @@
+[
+  {
+    "id": "hip-hop-nas-escolas",
+    "nome": "Hip Hop nas Escolas",
+    "descricao": "Projeto mencionado no documento-base do Programa Mais Cultura. Cadastro territorial, calendário e execução devem ser preenchidos com dados validados.",
+    "situacao": "Cadastro inicial"
+  },
+  {
+    "id": "mariazinha",
+    "nome": "Mariazinha — A Arte Liberta Mulheres",
+    "descricao": "Projeto mencionado no documento-base. Atribuições de escolas, atividades e indicadores precisam ser validadas.",
+    "situacao": "Cadastro inicial"
+  },
+  {
+    "id": "joaozinho",
+    "nome": "Joãozinho",
+    "descricao": "Projeto complementar mencionado no documento-base. Escopo e programação aguardam validação.",
+    "situacao": "Cadastro inicial"
+  },
+  {
+    "id": "cultura-antirracista",
+    "nome": "Socioeducativo de Cultura Antirracista",
+    "descricao": "Projeto mencionado no documento-base. Programação e abrangência territorial não foram presumidas.",
+    "situacao": "Cadastro inicial"
+  },
+  {
+    "id": "cidadania-urbana",
+    "nome": "Cidadania Cultural na Arte Urbana",
+    "descricao": "Projeto mencionado no documento-base. Atividades, locais e métricas aguardam cadastro validado.",
+    "situacao": "Cadastro inicial"
+  }
+]

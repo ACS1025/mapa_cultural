@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="description" content="Projeto independente de inteligência territorial para o Programa Mais Cultura de Hortolândia.">
+  <title>Mais Cultura | Inteligência Territorial</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/interatividade.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">MC</div>
+        <div>
+          <p class="brand-eyebrow">HORTOLÂNDIA · CULTURA</p>
+          <h1>Mais Cultura</h1>
+          <p class="brand-subtitle">Inteligência Territorial</p>
+        </div>
+      </div>
+
+      <nav class="navigation" aria-label="Navegação principal">
+        <button class="nav-item active" data-view="visao" type="button"><span class="nav-icon">▦</span> Visão geral</button>
+        <button class="nav-item" data-view="mapa" type="button"><span class="nav-icon">⌖</span> Mapa cultural</button>
+        <button class="nav-item" data-view="escolas" type="button"><span class="nav-icon">⌂</span> Escolas</button>
+        <button class="nav-item" data-view="projetos" type="button"><span class="nav-icon">✳</span> Projetos culturais</button>
+        <button class="nav-item" data-view="atividades" type="button"><span class="nav-icon">▤</span> Atividades</button>
+        <button class="nav-item" data-view="fontes" type="button"><span class="nav-icon">ⓘ</span> Fontes e dados</button>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="status-dot"></span>
+        <div>
+          <strong>Projeto independente</strong>
+          <p>GeoPixel é referência territorial. Integração ainda não configurada.</p>
+        </div>
+      </div>
+      <footer class="sidebar-footer">VERSÃO INICIAL · 0.1.0</footer>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="breadcrumb">PAINEL DE GESTÃO CULTURAL</p>
+          <h2 id="page-title">Visão geral</h2>
+        </div>
+        <div class="topbar-actions">
+          <span class="data-badge" id="data-status"><span class="status-dot"></span> <span id="data-status-text">Carregando dados da API…</span></span>
+          <button class="text-button hidden" id="retry-button" type="button">Tentar novamente</button>
+          <button class="mobile-menu" id="mobile-menu" type="button" aria-label="Abrir menu">☰</button>
+        </div>
+      </header>
+
+      <div class="filter-bar hidden" id="filter-bar" role="search" aria-label="Filtros">
+        <input type="search" id="filter-busca" placeholder="Buscar escola ou bairro" aria-label="Buscar escola ou bairro" autocomplete="off">
+        <select id="filter-rp" aria-label="Filtrar por RP"><option value="">Todas as RPs</option></select>
+        <select id="filter-projeto" aria-label="Filtrar por projeto"><option value="">Todos os projetos</option></select>
+        <select id="filter-ano" aria-label="Filtrar por ano">
+          <option value="">Todos os anos</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+        </select>
+        <select id="filter-situacao" aria-label="Filtrar por situação">
+          <option value="">Todas as situações</option>
+          <option value="com">Com atividades</option>
+          <option value="aguardando">Aguardando / em planejamento</option>
+        </select>
+        <button class="text-button hidden" id="filter-clear" type="button">Limpar filtros</button>
+        <span class="filter-count" id="filter-count" aria-live="polite"></span>
+      </div>
+
+      <section class="page-section" id="view-visao">
+        <div class="welcome-panel">
+          <div class="welcome-copy">
+            <p class="eyebrow light">PROGRAMA MAIS CULTURA · HORTOLÂNDIA</p>
+            <h3>O território como ponto de partida para a cultura.</h3>
+            <p>Organize escolas, projetos e atividades culturais em uma visão territorial integrada — com dados rastreáveis e sem presumir informações ainda não validadas.</p>
+            <button class="primary-button" type="button" data-go="mapa">Explorar mapa cultural <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="welcome-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="map-symbol">⌖</div>
+            <span class="art-label label-one">TERRITÓRIO</span>
+            <span class="art-label label-two">CULTURA</span>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div><p class="eyebrow">ACOMPANHAMENTO</p><h3>Indicadores do programa</h3></div>
+          <span class="muted small">Serão calculados após a inclusão de dados validados.</span>
+        </div>
+        <div class="metric-grid">
+          <article class="metric-card"><div class="metric-top"><span>Escolas cadastradas</span><span class="metric-icon">⌂</span></div><strong id="metric-escolas">0</strong><p>Cadastros carregados</p></article>
+          <article class="metric-card"><div class="metric-top"><span>Projetos cadastrados</span><span class="metric-icon">✳</span></div><strong id="metric-projetos">0</strong><p>Projetos com escolas vinculadas</p></article>
+          <article class="metric-card"><div class="metric-top"><span>Atividades registradas</span><span class="metric-icon">▤</span></div><strong id="metric-atividades">0</strong><p>Registros escola × projeto × ano</p></article>
+          <article class="metric-card"><div class="metric-top"><span>Participações registradas</span><span class="metric-icon">♧</span></div><strong id="metric-participacoes">0</strong><p>Somente dados informados</p></article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel map-preview-panel">
+            <div class="panel-heading"><div><p class="eyebrow">REFERÊNCIA GEOGRÁFICA</p><h3>Território de trabalho</h3></div><button class="text-button" type="button" data-go="mapa">Abrir mapa →</button></div>
+            <div id="preview-map" class="preview-map" aria-label="Prévia do mapa de referência"></div>
+            <p class="panel-footnote">O mapa de fundo é uma referência visual. Limites oficiais, regiões e pontos culturais ainda precisam ser importados e validados.</p>
+          </article>
+          <article class="panel next-steps-panel">
+            <div class="panel-heading"><div><p class="eyebrow">PRÓXIMAS ETAPAS</p><h3>Construção da base</h3></div></div>
+            <ol class="step-list">
+              <li><span>01</span><div><strong>Validar as fontes territoriais</strong><p>Confirmar mapas, regiões e permissões de uso.</p></div></li>
+              <li><span>02</span><div><strong>Cadastrar as escolas</strong><p>Usar identificadores e endereços confirmados.</p></div></li>
+              <li><span>03</span><div><strong>Organizar os projetos</strong><p>Separar catálogo, programação e execução.</p></div></li>
+            </ol>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section hidden" id="view-mapa">
+        <div class="map-toolbar">
+          <div><p class="eyebrow">EXPLORAÇÃO TERRITORIAL</p><h3>Mapa cultural</h3><p class="muted">Mapa aéreo para orientação visual. Use os filtros acima e clique em um ponto para ver os projetos da escola.</p></div>
+          <label class="layer-switch"><input type="checkbox" id="streets-toggle"> <span>Exibir mapa de ruas</span></label>
+        </div>
+        <div class="map-container"><div id="main-map" aria-label="Mapa territorial de Hortolândia"></div><div class="map-disclaimer"><span class="status-dot"></span> <span id="map-status-text">Carregando pontos…</span></div></div>
+        <div class="map-info-grid">
+          <article class="panel"><p class="eyebrow">BASE CARTOGRÁFICA</p><h3>Imagem aérea</h3><p>Camada de imagem aérea de provedor externo, carregada pela internet e sujeita à disponibilidade e aos termos do provedor.</p></article>
+          <article class="panel"><p class="eyebrow">DADOS DO PROGRAMA</p><h3>Escolas da API</h3><p>As escolas vêm da planilha do programa. Escolas sem coordenada confirmada não aparecem no mapa e ficam sinalizadas na aba Escolas.</p></article>
+        </div>
+      </section>
+
+      <section class="page-section hidden" id="view-escolas">
+        <div class="section-heading"><div><p class="eyebrow">CADASTRO TERRITORIAL</p><h3>Escolas participantes</h3></div><span class="data-badge" id="escolas-badge">0 registros</span></div>
+        <div class="school-list" id="escolas-list"></div>
+        <article class="panel empty-state" id="escolas-empty"><div class="empty-icon">⌂</div><h3>Carregando escolas…</h3><p>Aguardando resposta da API.</p></article>
+      </section>
+
+      <section class="page-section hidden" id="view-projetos">
+        <div class="section-heading"><div><p class="eyebrow">CATÁLOGO CULTURAL</p><h3>Projetos culturais</h3></div><span class="data-badge" id="projetos-badge">Projetos do documento-base</span></div>
+        <div class="notice"><strong>Nota sobre os dados:</strong> os nomes abaixo refletem os projetos mencionados no documento do programa. Não representam confirmação de calendário, orçamento ou execução atual.</div>
+        <div class="project-grid" id="project-list"></div>
+      </section>
+
+      <section class="page-section hidden" id="view-atividades">
+        <div class="section-heading"><div><p class="eyebrow">EXECUÇÃO</p><h3>Registro de Atividades Culturais</h3></div><span class="data-badge" id="atividades-badge">0 registros</span></div>
+        <div class="table-wrap"><table class="activity-table hidden" id="atividades-table"></table></div>
+        <p class="muted small">Cada número é a quantidade de escolas com o projeto no ano. Clique para filtrar. Projetos que a API marca sem informar o ano aparecem apenas na coluna Total.</p>
+        <article class="panel empty-state" id="atividades-empty"><div class="empty-icon">▤</div><h3>Nenhuma atividade para mostrar</h3><p>As atividades são calculadas a partir dos projetos de cada escola retornados pela API.</p></article>
+      </section>
+
+      <section class="page-section hidden" id="view-fontes">
+        <div class="section-heading"><div><p class="eyebrow">RASTREABILIDADE</p><h3>Fontes e qualidade dos dados</h3></div></div>
+        <div class="source-grid">
+          <article class="panel"><span class="source-state pending">A verificar</span><h3>GeoPixel Cidades</h3><p>Referência visual e possível fonte geográfica. A camada “Cultura” foi observada, mas conteúdo, atributos e formas de exportação ainda não foram confirmados.</p></article>
+          <article class="panel"><span class="source-state pending">A validar</span><h3>Mapas oficiais municipais</h3><p>Investigar a disponibilidade e as condições de uso dos mapas de regiões administrativas e demais dados territoriais publicados pela Prefeitura.</p></article>
+          <article class="panel"><span class="source-state pending">A cadastrar</span><h3>Dados do programa</h3><p>Escolas, atividades e participação devem ter fonte, data de atualização e responsável definidos sempre que aplicável.</p></article>
+        </div>
+        <div class="notice"><strong>Regra de integridade:</strong> não inventar escolas, coordenadas, limites regionais, participantes ou resultados. Campo desconhecido permanece vazio ou marcado como pendente.</div>
+      </section>
+
+      <footer class="main-footer"><span>Mais Cultura | Inteligência Territorial</span><span>Projeto independente · Versão 0.1.0</span></footer>
+    </main>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="js/mapa.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

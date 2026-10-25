@@ -1,0 +1,461 @@
+[
+  {
+    "id": 1,
+    "rp": "6.25",
+    "escola": "ANTONIO ZANLUCHI PROFESSOR",
+    "bairro": "Parque do Horto",
+    "ideb": 4.9,
+    "lat": -22.8450,
+    "lng": -47.2030,
+    "projetos": {
+      "mariazinha": { "2026": true, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": true, "2027": true },
+      "eventos": { "2026": false, "2027": true },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 2,
+    "rp": "3.10",
+    "escola": "CONCEICAO APARECIDA TERZA GOMES CARDINALES PROFESSORA",
+    "bairro": "Jardim Amanda II",
+    "ideb": 5.4,
+    "lat": -22.9050,
+    "lng": -47.2350,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": true },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": true, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 3,
+    "rp": "1.1",
+    "escola": "CRISTIANE CHAVES MOREIRA BRAGA PROFESSORA",
+    "bairro": "Parque dos Pinheiros I",
+    "ideb": 5.7,
+    "lat": -22.8590,
+    "lng": -47.2150,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": true, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 4,
+    "rp": "3.10",
+    "escola": "ELISEO MARSON PROFESSOR",
+    "bairro": "Jardim Amanda I",
+    "ideb": 4.7,
+    "lat": -22.9080,
+    "lng": -47.2320,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": true },
+      "eventos": { "2026": false, "2027": true },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 5,
+    "rp": "3.10",
+    "escola": "EUZEBIO ANTONIO RODRIGUES PROFESSOR",
+    "bairro": "Jardim Amanda IV",
+    "ideb": 5.3,
+    "lat": -22.9120,
+    "lng": -47.2280,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": true },
+      "hip_hop": { "2026": false, "2027": true },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 6,
+    "rp": "4.16",
+    "escola": "GUIDO ROSOLEN",
+    "bairro": "Jardim Rosolen",
+    "ideb": 5.9,
+    "lat": -22.8650,
+    "lng": -47.1950,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": true },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": true, "2027": false },
+      "eventos": { "2026": true, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 7,
+    "rp": "2.8",
+    "escola": "HEDY MADALENA BOCCHI PROFESSORA",
+    "bairro": "Jardim Everest",
+    "ideb": 5.4,
+    "lat": -22.8550,
+    "lng": -47.2100,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": true, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 8,
+    "rp": "5.17",
+    "escola": "HONORINO FABBRI DOUTOR",
+    "bairro": "Jardim Sumarezinho",
+    "ideb": 5.1,
+    "lat": -22.8480,
+    "lng": -47.1900,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 9,
+    "rp": "5.22",
+    "escola": "JARDIM ALINE",
+    "bairro": "Jardim Santiago",
+    "ideb": 4.7,
+    "lat": -22.8400,
+    "lng": -47.1850,
+    "projetos": {
+      "mariazinha": { "2026": true, "2027": false },
+      "joaozinho": { "2026": false, "2027": true },
+      "hip_hop": { "2026": true, "2027": true },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 10,
+    "rp": "2.9",
+    "escola": "JARDIM SANTA CLARA DO LAGO",
+    "bairro": "Jardim Santa Clara do Lago",
+    "ideb": 5.7,
+    "lat": -22.8620,
+    "lng": -47.2220,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": true, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 11,
+    "rp": "2.6",
+    "escola": "JONATAS DAVI VISEL DOS SANTOS",
+    "bairro": "Loteamento Adventista Campineiro",
+    "ideb": 4.8,
+    "lat": -22.8700,
+    "lng": -47.2300,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": true },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": true },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 12,
+    "rp": "2.7",
+    "escola": "JOSE CLARET DIONISIO PROFESSOR",
+    "bairro": "João Luiz",
+    "ideb": 6.7,
+    "lat": -22.8680,
+    "lng": -47.2180,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 13,
+    "rp": "6.26",
+    "escola": "LIOMAR FREITAS CAMARA PROFESSORA",
+    "bairro": "Vila Real Continuação",
+    "ideb": 4.9,
+    "lat": -22.8520,
+    "lng": -47.2050,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 14,
+    "rp": "1.1",
+    "escola": "MANOEL IGNACIO DA SILVA",
+    "bairro": "Loteamento Remanso Campineiro",
+    "ideb": 6.2,
+    "lat": -22.8580,
+    "lng": -47.2200,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 15,
+    "rp": "5.18",
+    "escola": "MARIA ANTONIETTA GARNERO LA FORTEZZA PROFESSORA",
+    "bairro": "Jardim Novo Angulo",
+    "ideb": 4.7,
+    "lat": -22.8350,
+    "lng": -47.2100,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": true },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": true },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": true,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 16,
+    "rp": "5.21",
+    "escola": "MARIA CRISTINA DE SOUZA LOBO PROFESSORA",
+    "bairro": "Jardim Nova Europa",
+    "ideb": 4.7,
+    "lat": -22.8420,
+    "lng": -47.1980,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": true, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 17,
+    "rp": "6.27",
+    "escola": "MARIA RITA ARAUJO COSTA PROFESSORA",
+    "bairro": "Vila São Pedro",
+    "ideb": 5.5,
+    "lat": -22.8320,
+    "lng": -47.2120,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 18,
+    "rp": "6.25",
+    "escola": "MARISTELA CAROLINA MELLIN",
+    "bairro": "Jardim Minda",
+    "ideb": 4.5,
+    "lat": -22.8300,
+    "lng": -47.2250,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": true },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": true },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": true,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 19,
+    "rp": "2.9",
+    "escola": "PAULINA ROSA PROFESSORA",
+    "bairro": "Jardim Santa Rita de Cássia",
+    "ideb": 6.6,
+    "lat": -22.8650,
+    "lng": -47.2150,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 20,
+    "rp": "3.14",
+    "escola": "PAULO CAMILO DE CAMARGO",
+    "bairro": "Jardim São Bento",
+    "ideb": 5.0,
+    "lat": -22.8950,
+    "lng": -47.2400,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 21,
+    "rp": "3.10",
+    "escola": "PRISCILA FERNANDES DA ROCHA",
+    "bairro": "Jardim Amanda I",
+    "ideb": 4.9,
+    "lat": -22.9100,
+    "lng": -47.2300,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": true, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 22,
+    "rp": "6.25",
+    "escola": "RAQUEL SAES MELHADO DA SILVA PROFESSORA",
+    "bairro": "Jardim Nova Hortolândia",
+    "ideb": 4.5,
+    "lat": -22.8480,
+    "lng": -47.2250,
+    "projetos": {
+      "mariazinha": { "2026": true, "2027": false },
+      "joaozinho": { "2026": false, "2027": true },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": true },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 23,
+    "rp": "6.28",
+    "escola": "RECREIO ALVORADA",
+    "bairro": "Parque Orestes Ongaro",
+    "ideb": 4.9,
+    "lat": -22.8250,
+    "lng": -47.2350,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": true, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 24,
+    "rp": "4.16",
+    "escola": "ROBERTO RODRIGUES DE AZEVEDO PASTOR",
+    "bairro": "Chácara Coelho",
+    "ideb": 5.4,
+    "lat": -22.8750,
+    "lng": -47.2050,
+    "projetos": {
+      "mariazinha": { "2026": true, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": true },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 25,
+    "rp": "4.15",
+    "escola": "YASUO SASAKI",
+    "bairro": "Jardim Santa Esmeralda",
+    "ideb": 5.6,
+    "lat": -22.8850,
+    "lng": -47.2450,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": false, "2027": true },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 26,
+    "rp": "1.1",
+    "escola": "ETEC - ESCOLA TÉCNICA ESTADUAL DE HORTOLÂNDIA",
+    "bairro": "Loteamento Remanso Campineiro",
+    "ideb": 6.4,
+    "lat": -22.8560,
+    "lng": -47.2180,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": true, "2027": false },
+      "eventos": { "2026": false, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  },
+  {
+    "id": 27,
+    "rp": "6.27",
+    "escola": "IF-HTO INSTITUTO FEDERAL DE HORTOLÂNDIA",
+    "bairro": "Vila São Pedro",
+    "ideb": null,
+    "lat": -22.8340,
+    "lng": -47.2100,
+    "projetos": {
+      "mariazinha": { "2026": false, "2027": false },
+      "joaozinho": { "2026": false, "2027": false },
+      "hip_hop": { "2026": false, "2027": false },
+      "eventos": { "2026": true, "2027": false },
+      "antirracismo": false,
+      "cidadania": false
+    }
+  }
+]
