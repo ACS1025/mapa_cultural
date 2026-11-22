@@ -6,7 +6,9 @@
   let mainMap;
   let previewMap;
   let boundaryLayer;
+  let previewBoundaryLayer;
   let markersLayer;
+  let previewMarkersLayer;
   let ruasIndisponiveis = false;
   // Cada mapa precisa das SUAS camadas: uma camada do Leaflet não pode estar em dois mapas.
   const camadasPorMapa = new Map();
@@ -53,6 +55,10 @@
     "IF-HTO INSTITUTO FEDERAL DE HORTOLÂNDIA": { lat: -22.8340, lng: -47.2100 }
   };
 
+  const coordsNormalizadas = new Map(
+    Object.keys(coordsEscolas).map(nome => [chave(nome), coordsEscolas[nome]])
+  );
+
   // Chave tolerante a maiúsculas, acentos e espaços duplicados
   function chave(nome) {
     return String(nome == null ? "" : nome)
@@ -60,11 +66,15 @@
       .replace(/\s+/g, " ").trim().toUpperCase();
   }
 
-  const coordsNormalizadas = new Map(
-    Object.keys(coordsEscolas).map(nome => [chave(nome), coordsEscolas[nome]])
-  );
-
-  function coordenadasDe(nome) {
+  function coordenadasDe(nome, registro) {
+    if (registro) {
+      const lat = Number(registro.lat);
+      const lng = Number(registro.lng);
+      if (Number.isFinite(lat) && Number.isFinite(lng) &&
+          lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+        return { lat, lng };
+      }
+    }
     return coordsEscolas[nome] || coordsNormalizadas.get(chave(nome)) || null;
   }
 
@@ -166,13 +176,23 @@
       .then(geojson => {
         const boundaryStyle = {
           color: '#00CED1',
-          weight: 2.5,
-          opacity: 0.9,
+          weight: 3,
+          opacity: 1,
           fillColor: '#00CED1',
-          fillOpacity: 0.12
+          fillOpacity: 0.10
         };
-        boundaryLayer = L.geoJSON(geojson, { style: boundaryStyle }).addTo(map);
+        const apenasContorno = {
+          ...geojson,
+          features: geojson.features.filter(feature =>
+            feature.geometry &&
+            (feature.geometry.type === "Polygon" || feature.geometry.type === "MultiPolygon")
+          )
+        };
+        const layer = L.geoJSON(apenasContorno, { style: boundaryStyle }).addTo(map);
+        if (map === mainMap) boundaryLayer = layer;
+        if (map === previewMap) previewBoundaryLayer = layer;
         if (mapaVisivel()) ajustar();
+        map.fitBounds(layer.getBounds(), { padding: [20, 20] });
       })
       .catch(() => {
         console.info('Aviso: GeoJSON de limites não carregado.');
@@ -233,11 +253,33 @@
       `;
   }
 
-  function atualizarStatus(noMapa, semCoord) {
+  function atualizarStatus(noMapa, semCoord, itens) {
     const el = document.getElementById("map-status-text");
     if (!el) return;
     const base = noMapa === 1 ? "1 escola no mapa" : `${noMapa} escolas no mapa`;
     el.textContent = semCoord ? `${base} · ${semCoord} sem coordenada` : base;
+
+    const resumo = document.getElementById("map-project-summary");
+    if (!resumo) return;
+    const projetos = new Map();
+    (itens || []).forEach(item => {
+      (item.projetos || []).forEach(projeto => {
+        projetos.set(projeto.chave, (projetos.get(projeto.chave) || 0) + 1);
+      });
+    });
+    resumo.innerHTML = "";
+    if (!projetos.size) {
+      resumo.textContent = "Nenhum projeto vinculado aos pontos exibidos";
+      return;
+    }
+    [...projetos.entries()].slice(0, 6).forEach(([chaveProjeto, quantidade]) => {
+      const nome = (itens || []).flatMap(item => item.projetos || [])
+        .find(projeto => projeto.chave === chaveProjeto)?.nome || chaveProjeto;
+      const badge = document.createElement("span");
+      badge.className = "map-project-badge";
+      badge.textContent = `${nome}: ${quantidade}`;
+      resumo.appendChild(badge);
+    });
   }
 
   // Desenha os pontos recebidos do app.js (já filtrados)
@@ -248,10 +290,11 @@
     }
     markersLayer.clearLayers();
     markersPorChave.clear();
+    if (previewMarkersLayer) previewMarkersLayer.clearLayers();
     let semCoord = 0;
 
     itens.forEach(item => {
-      const coords = coordenadasDe(item.escola.escola);
+      const coords = coordenadasDe(item.escola.escola, item.escola);
       if (!coords) { semCoord++; return; }
       const marker = L.marker([coords.lat, coords.lng], {
         icon: montarIcone(item.temAtividade),
@@ -260,9 +303,20 @@
       marker.bindPopup(montarPopup(item));
       markersLayer.addLayer(marker);
       markersPorChave.set(chave(item.escola.escola), marker);
+      if (previewMarkersLayer) {
+        previewMarkersLayer.addLayer(L.marker([coords.lat, coords.lng], {
+          icon: montarIcone(item.temAtividade),
+          title: item.escola.escola
+        }));
+      }
     });
 
-    atualizarStatus(markersPorChave.size, semCoord);
+    atualizarStatus(markersPorChave.size, semCoord, itens);
+    if (previewMap && opcoes && opcoes.filtrado && previewMarkersLayer && previewMarkersLayer.getBounds().isValid()) {
+      previewMap.fitBounds(previewMarkersLayer.getBounds(), { padding: [20, 20], maxZoom: 14 });
+    } else if (previewMap && previewBoundaryLayer) {
+      previewMap.fitBounds(previewBoundaryLayer.getBounds(), { padding: [20, 20] });
+    }
     ajustarPendente = !!(opcoes && opcoes.filtrado);
     if (mapaVisivel()) ajustar();
   }
@@ -275,8 +329,10 @@
       ajustar();
     },
     render,
-    temCoordenada(nome) {
-      return !!coordenadasDe(nome);
+    temCoordenada(nomeOuRegistro) {
+      const registro = typeof nomeOuRegistro === "object" ? nomeOuRegistro : null;
+      const nome = registro ? registro.escola : nomeOuRegistro;
+      return !!coordenadasDe(nome, registro);
     },
     focar(nome) {
       if (!mainMap) return;
@@ -296,13 +352,29 @@
       previewMap = initMap("preview-map", 12, false);
       previewMap.zoomControl.remove();
       previewMap.attributionControl.setPrefix("");
+      previewMarkersLayer = L.featureGroup().addTo(previewMap);
+      loadMunicipalBoundary(previewMap);
+      previewEl.setAttribute("role", "button");
+      previewEl.setAttribute("tabindex", "0");
+      const abrirMapaAmpliado = () => {
+        const url = new URL("index.html", window.location.href);
+        url.searchParams.set("view", "mapa");
+        window.open(url.toString(), "_blank", "noopener");
+      };
+      previewEl.addEventListener("click", abrirMapaAmpliado);
+      previewEl.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          abrirMapaAmpliado();
+        }
+      });
     }
 
     const mainEl = document.getElementById("main-map");
     if (mainEl) {
       mainMap = initMap("main-map", 13, true);
       mainMap.attributionControl.setPrefix("");
-      markersLayer = L.layerGroup().addTo(mainMap);
+      markersLayer = L.featureGroup().addTo(mainMap);
       loadMunicipalBoundary(mainMap);
       if (renderPendente) {
         const { itens, opcoes } = renderPendente;
@@ -314,7 +386,6 @@
     const toggle = document.getElementById("streets-toggle");
     if (toggle) {
       toggle.addEventListener("change", () => definirBase(toggle.checked));
-      // O navegador pode restaurar a caixa marcada após recarregar a página
       if (toggle.checked) definirBase(true);
     }
   }

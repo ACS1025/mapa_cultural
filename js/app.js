@@ -4,7 +4,7 @@
 (() => {
   "use strict";
 
-  const API_URL = "https://script.google.com/macros/s/AKfycbzAt2UeQkq0mQKSeWGOkFAqZ_ncXVUl-TGX07ykEjusEHiVX1J9J-L_glXxKl_Ra4vY/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbwaaJXlvTApTotZLuwuMbT9wv7aYjU2WonuvYGDwQ4eGI2CSzewWxO0gQUmnYIVTU1i/exec";
   const ANOS = ["2026", "2027"];
   const VIEWS_COM_FILTRO = ["mapa", "escolas", "atividades"];
 
@@ -24,7 +24,8 @@
     joaozinho: "Joãozinho",
     antirracismo: "Socioeducativo de Cultura Antirracista",
     cidadania: "Cidadania Cultural na Arte Urbana",
-    eventos: "Eventos"
+    eventos: "Eventos",
+    capoeira: "Capoeira"
   };
 
   // id do catálogo (projetos.json) -> chave da API
@@ -40,7 +41,7 @@
     {
       id: "hip-hop-nas-escolas",
       nome: "Hip Hop nas Escolas",
-      descricao: "Projeto citado no documento-base do Programa Mais Cultura. Detalhes de calendário, escolas e execução devem ser validados no cadastro oficial.",
+      descricao: "Projeto integrante do cadastro do Programa Mais Cultura, com escolas e vinculações carregadas pela API.",
       situacao: "Cadastro inicial"
     },
     {
@@ -58,13 +59,13 @@
     {
       id: "cultura-antirracista",
       nome: "Socioeducativo de Cultura Antirracista",
-      descricao: "Ação citada no documento-base. A programação e a abrangência territorial ainda precisam ser cadastradas.",
+      descricao: "Ação integrante do cadastro do Programa Mais Cultura, com abrangência territorial vinculada às escolas.",
       situacao: "Cadastro inicial"
     },
     {
       id: "cidadania-urbana",
       nome: "Cidadania Cultural na Arte Urbana",
-      descricao: "Ação citada no documento-base. As atividades, locais e métricas serão definidos com base em informações validadas.",
+      descricao: "Ação integrada ao cadastro do programa, com escolas e atividades vinculadas pela API.",
       situacao: "Cadastro inicial"
     }
   ];
@@ -220,6 +221,20 @@
   }
 
   function preencherSelects() {
+    const sugestoes = $("escolas-sugestoes");
+    if (sugestoes) {
+      sugestoes.innerHTML = "";
+      state.escolas
+        .map(e => e.escola)
+        .filter(Boolean)
+        .sort((a, b) => String(a).localeCompare(String(b), "pt-BR"))
+        .forEach(escola => {
+          const opcao = document.createElement("option");
+          opcao.value = escola;
+          sugestoes.appendChild(opcao);
+        });
+    }
+
     const rpSelect = $("filter-rp");
     const rps = [...new Set(state.escolas.map(e => e.rp).filter(v => v !== undefined && v !== null && v !== ""))]
       .map(String)
@@ -322,7 +337,7 @@
       } else {
         chips.appendChild(criar("span", "chip chip-muted", "Aguardando / em planejamento"));
       }
-      const temCoord = window.MaisCulturaMap && window.MaisCulturaMap.temCoordenada(escola.escola);
+      const temCoord = window.MaisCulturaMap && window.MaisCulturaMap.temCoordenada(escola);
       if (window.MaisCulturaMap && !temCoord) {
         chips.appendChild(criar("span", "chip chip-warn", "Sem posição no mapa"));
       }
@@ -444,13 +459,36 @@
   async function carregarDados() {
     setStatus("carregando", "Carregando dados da API…");
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API_URL, { cache: "no-store" });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const dados = await response.json();
       if (dados && dados.error) throw new Error(dados.error);
-      if (!Array.isArray(dados)) throw new Error("Formato inesperado da resposta");
+      const registros = Array.isArray(dados)
+        ? dados
+        : (dados && Array.isArray(dados.value) ? dados.value : null);
+      if (!registros) throw new Error("Formato inesperado da resposta");
 
-      state.escolas = dados.filter(e => e && e.escola);
+      const escolasValidadas = await loadJson("data/escolas.json", []);
+      const coordenadasPorNome = new Map(
+        (Array.isArray(escolasValidadas) ? escolasValidadas : [])
+          .map(escola => [norm(escola.escola), escola])
+      );
+
+      state.escolas = registros
+        .filter(e => e && e.escola)
+        .map(e => {
+          const base = coordenadasPorNome.get(norm(e.escola));
+          const lat = e.lat != null && e.lat !== "" ? e.lat : (base ? base.lat : null);
+          const lng = e.lng != null && e.lng !== "" ? e.lng : (base ? base.lng : null);
+          return {
+            ...e,
+            lat,
+            lng,
+            bairro: e.bairro || (base ? base.bairro : ""),
+            ideb: e.ideb != null ? e.ideb : (base ? base.ideb : null),
+            projetos: e.projetos && typeof e.projetos === "object" ? e.projetos : {}
+          };
+        });
       state.carregado = true;
       preencherSelects();
       atualizarMetricas();
@@ -499,6 +537,14 @@
     renderEscolas();
     renderAtividades();
     carregarDados();
+
+    const viewParam = new URLSearchParams(window.location.search).get("view");
+    if (viewNames[viewParam]) {
+      showView(viewParam);
+      window.setTimeout(() => {
+        if (window.MaisCulturaMap) window.MaisCulturaMap.invalidate();
+      }, 120);
+    }
   }
 
   document.addEventListener("DOMContentLoaded", init);

@@ -37,10 +37,10 @@
         <span class="status-dot"></span>
         <div>
           <strong>Projeto independente</strong>
-          <p>GeoPixel é referência territorial. Integração ainda não configurada.</p>
+          <p>Dados territoriais integrados à API do programa.</p>
         </div>
       </div>
-      <footer class="sidebar-footer">VERSÃO INICIAL · 0.1.0</footer>
+      <footer class="sidebar-footer">VERSÃO 1.0.0</footer>
     </aside>
 
     <main class="main-content">
@@ -57,7 +57,8 @@
       </header>
 
       <div class="filter-bar hidden" id="filter-bar" role="search" aria-label="Filtros">
-        <input type="search" id="filter-busca" placeholder="Buscar escola ou bairro" aria-label="Buscar escola ou bairro" autocomplete="off">
+        <input type="search" id="filter-busca" list="escolas-sugestoes" placeholder="Buscar escola ou bairro" aria-label="Buscar escola ou bairro" autocomplete="off">
+        <datalist id="escolas-sugestoes"></datalist>
         <select id="filter-rp" aria-label="Filtrar por RP"><option value="">Todas as RPs</option></select>
         <select id="filter-projeto" aria-label="Filtrar por projeto"><option value="">Todos os projetos</option></select>
         <select id="filter-ano" aria-label="Filtrar por ano">
@@ -92,7 +93,7 @@
 
         <div class="section-heading">
           <div><p class="eyebrow">ACOMPANHAMENTO</p><h3>Indicadores do programa</h3></div>
-          <span class="muted small">Serão calculados após a inclusão de dados validados.</span>
+          <span class="muted small">Calculados a partir dos dados carregados pela API.</span>
         </div>
         <div class="metric-grid">
           <article class="metric-card"><div class="metric-top"><span>Escolas cadastradas</span><span class="metric-icon">⌂</span></div><strong id="metric-escolas">0</strong><p>Cadastros carregados</p></article>
@@ -104,16 +105,11 @@
         <div class="content-grid">
           <article class="panel map-preview-panel">
             <div class="panel-heading"><div><p class="eyebrow">REFERÊNCIA GEOGRÁFICA</p><h3>Território de trabalho</h3></div><button class="text-button" type="button" data-go="mapa">Abrir mapa →</button></div>
-            <div id="preview-map" class="preview-map" aria-label="Prévia do mapa de referência"></div>
-            <p class="panel-footnote">O mapa de fundo é uma referência visual. Limites oficiais, regiões e pontos culturais ainda precisam ser importados e validados.</p>
-          </article>
-          <article class="panel next-steps-panel">
-            <div class="panel-heading"><div><p class="eyebrow">PRÓXIMAS ETAPAS</p><h3>Construção da base</h3></div></div>
-            <ol class="step-list">
-              <li><span>01</span><div><strong>Validar as fontes territoriais</strong><p>Confirmar mapas, regiões e permissões de uso.</p></div></li>
-              <li><span>02</span><div><strong>Cadastrar as escolas</strong><p>Usar identificadores e endereços confirmados.</p></div></li>
-              <li><span>03</span><div><strong>Organizar os projetos</strong><p>Separar catálogo, programação e execução.</p></div></li>
-            </ol>
+            <div class="preview-map-wrapper">
+              <div id="preview-map" class="preview-map" aria-label="Prévia do mapa de referência"></div>
+              <a class="preview-map-open" href="index.html?view=mapa" target="_blank" rel="noopener">Abrir mapa ampliado ↗</a>
+            </div>
+            <p class="panel-footnote">Mapa territorial integrado com o limite municipal, as escolas e os projetos cadastrados no Apps Script.</p>
           </article>
         </div>
       </section>
@@ -123,10 +119,11 @@
           <div><p class="eyebrow">EXPLORAÇÃO TERRITORIAL</p><h3>Mapa cultural</h3><p class="muted">Mapa aéreo para orientação visual. Use os filtros acima e clique em um ponto para ver os projetos da escola.</p></div>
           <label class="layer-switch"><input type="checkbox" id="streets-toggle"> <span>Exibir mapa de ruas</span></label>
         </div>
+        <div class="map-project-summary" id="map-project-summary" aria-live="polite"></div>
         <div class="map-container"><div id="main-map" aria-label="Mapa territorial de Hortolândia"></div><div class="map-disclaimer"><span class="status-dot"></span> <span id="map-status-text">Carregando pontos…</span></div></div>
         <div class="map-info-grid">
           <article class="panel"><p class="eyebrow">BASE CARTOGRÁFICA</p><h3>Imagem aérea</h3><p>Camada de imagem aérea de provedor externo, carregada pela internet e sujeita à disponibilidade e aos termos do provedor.</p></article>
-          <article class="panel"><p class="eyebrow">DADOS DO PROGRAMA</p><h3>Escolas da API</h3><p>As escolas vêm da planilha do programa. Escolas sem coordenada confirmada não aparecem no mapa e ficam sinalizadas na aba Escolas.</p></article>
+          <article class="panel"><p class="eyebrow">DADOS DO PROGRAMA</p><h3>Escolas da API</h3><p>As escolas, os projetos e suas vinculações vêm do Apps Script. Cada escola cadastrada com coordenada ou referência territorial é exibida no mapa.</p></article>
         </div>
       </section>
 
@@ -159,7 +156,7 @@
         <div class="notice"><strong>Regra de integridade:</strong> não inventar escolas, coordenadas, limites regionais, participantes ou resultados. Campo desconhecido permanece vazio ou marcado como pendente.</div>
       </section>
 
-      <footer class="main-footer"><span>Mais Cultura | Inteligência Territorial</span><span>Projeto independente · Versão 0.1.0</span></footer>
+      <footer class="main-footer"><span>Mais Cultura | Inteligência Territorial</span><span>Projeto independente · Versão 1.0.0</span></footer>
     </main>
   </div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
